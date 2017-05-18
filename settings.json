@@ -1,0 +1,8 @@
+{
+    "logs": "logs",
+    "command_prefix": {
+        "base": "!",
+        "admin": "a!",
+        "user": "u!"
+    }
+}

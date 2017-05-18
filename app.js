@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
+const secret = require('./secret.json');
 const Emoji = require("discord-emoji");
 
 client.on('ready', () => {
@@ -118,4 +119,4 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
     channel.send(message);
 });
 
-client.login(settings.token);
+client.login(secret.token);
