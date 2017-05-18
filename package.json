@@ -1,0 +1,15 @@
+{
+  "name": "noobeater",
+  "version": "0.0.1",
+  "description": "Bot for Glaucus Pocus Discord",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pandraghon",
+  "license": "MIT",
+  "dependencies": {
+    "discord-emoji": "^1.1.1",
+    "discord.js": "^11.1.0"
+  }
+}
