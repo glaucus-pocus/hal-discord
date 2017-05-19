@@ -4,11 +4,17 @@ const settings = require('./settings.json');
 const secret = require('./secret.json');
 const Emoji = require("discord-emoji");
 const sql = require('sqlite');
+const fs = require('fs');
 
 sql.open('./db.sqlite');
 
-client.on('ready', () => {
-    console.log('I am ready!');
+fs.readdir('./events/', (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+        const eventFunction = require(`./events/${file}`);
+        const eventName = file.split('.')[0];
+        client.on(eventName, (...args) => eventFunction.run(client, ...args));
+    });
 });
 
 const updateUserXP = (points, userId) => {
@@ -115,39 +121,6 @@ client.on('message', message => {
             });
         }
     }
-});
-
-client.on('guildMemberAdd', member => {
-    member.guild.defaultChannel.send(`${member} nous a rejoint !`).then(message => {
-        message.react('😊');
-    });
-
-    const channel = member.guild.channels.find('name', settings.logs);
-    if (!channel) return;
-    channel.send(`added member : ${member}`);
-});
-
-client.on('guildMemberRemove', member => {
-    member.guild.defaultChannel.send(`${member} nous a quitté !`).then(message => {
-        message.react('😭');
-    });
-
-    const channel = member.guild.channels.find('name', settings.logs);
-    if (!channel) return;
-    channel.send(`removed member : ${member}`);
-});
-
-client.on('guildMemberUpdate', (oldMember, newMember) => {
-            const channel = newMember.guild.channels.find('name', settings.logs);
-            if (!channel) return;
-            const newRoles = newMember.roles.filter(role => !oldMember.roles.has(role.id)).map(role => role.name);
-            const removedRoles = oldMember.roles.filter(role => !newMember.roles.has(role.id)).map(role => role.name);
-
-            let message = `${oldMember} changed :`;
-            if (newRoles.length > 0) message += `\n - New roles : \`${newRoles.join('\`, \`')}\``;
-    if (removedRoles.length > 0) message += `\n - Removed roles : \`${removedRoles.join('\`, \`')}\``;
-    
-    channel.send(message);
 });
 
 client.login(secret.token);
