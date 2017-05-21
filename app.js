@@ -54,7 +54,7 @@ client.on('message', message => {
     if (/\(\╯\°\□\°\）\╯\︵\ \┻\━\┻/.test(message.content)) {
         message.reply('PUT. THE. TABLE. BACK.');
     }
-    if ((matches = message.content.match(/^([a-zA-Z0-9])$/))) {
+    if ((matches = message.content.match(/^([a-zA-Z])$/))) {
         let c = message.content.charCodeAt(0);
         switch (c) {
             case 'Z':
@@ -66,59 +66,33 @@ client.on('message', message => {
         }
         message.reply(c);
     }
-
-    if (message.content.startsWith(settings.command_prefix.admin) && message.member.roles.some(role => ['admin', 'superadmin'].includes(role.name))) {
-        const command = message.content.substring(settings.command_prefix.admin.length);
-        if (command.startsWith(`purge`)) {
-            message.channel.fetchMessages()
-                .then(messages => message.channel.bulkDelete(messages))
-                .catch(error => {
-                    const channel = message.guild.channels.find('name', settings.logs);
-                    if (!channel) return;
-                    channel.send(`Error while purging ${message.channel} : \`${error}\``);
-                });
-        }
+    if ((matches = message.content.match(/^([0-9]{1,15})$/))) {
+        message.reply(Number(matches[1]) + 1);
     }
 
-    if (message.content.startsWith(settings.command_prefix.user) && message.member.roles.some(role => ['girl', 'boy', 'bot'].includes(role.name))) {
-        const command = message.content.substring(settings.command_prefix.user.length);
-        if ((matches = command.match(/^poll \[(.*)\] ?(?:\((.*)\))?/))) {
-            const title = matches[1];
-            const options = matches[2] ? matches[2].split(' ;; ') : [];
-            let msg = `**${title}**`;
-            for (let option in options) {
-                msg += `\n **${Number(option) + 1}**. \`${options[option]}\``;
+    const keys = Object.keys(settings.commands);
+    for (let key of keys) {
+        const commandGroup = settings.commands[key];
+        if (message.content.startsWith(commandGroup.prefix)) {
+            if (!message.member.roles.some(role => settings.commands[key].roles.includes(role.name))) {
+                message.reply('tu n\'es pas autorisée à faire ça, bitch');
+            } else {
+                const command = message.content.split(' ')[0].slice(commandGroup.prefix.length);
+                const args = message.content.slice(commandGroup.prefix.length + command.length + 1);
+
+                if (/\.\./.test(command)) {
+                    message.reply('Tu y as vraiment cru ?');
+                    break;
+                }
+
+                try {
+                    const commandFile = require(`./commands/${key}/${command}.js`);
+                    commandFile.run(client, message, args);
+                } catch (err) {
+                    console.error(err);
+                }
             }
-            message.channel.send(msg)
-                .then(msg => {
-                    const emojiList = {
-                        1: 'one',
-                        2: 'two',
-                        3: 'three',
-                        4: 'four',
-                        5: 'five',
-                        6: 'six',
-                        7: 'seven',
-                        8: 'eight',
-                        9: 'nine'
-                    };
-                    if (options.length > 0) {
-                        let promise = msg.react(Emoji.symbols[emojiList[1]]);
-                        for (let option in options) {
-                            promise = promise.then(react => react.message.react(Emoji.symbols[emojiList[Number(option) + 2]]));
-                        }
-                    }
-                })
-                .catch(error => {
-                    const channel = message.guild.channels.find('name', settings.logs);
-                    if (!channel) return;
-                    channel.send(`Error while creating poll in ${message.channel} : \`${error}\`\nCommand : \`${message.content}\``);
-                });
-        } else if (command === 'lvl') {
-            sql.get(`SELECT xp, level FROM users WHERE id = '${message.author.id}'`).then(row => {
-                if (!row) return message.reply('Ton niveau actuel est ... 0.');
-                message.reply(`Ton niveau actuel est ${row.level} [${row.xp}]`);
-            });
+            break;
         }
     }
 });

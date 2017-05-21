@@ -1,8 +1,17 @@
 {
     "logs": "logs",
-    "command_prefix": {
-        "base": "!",
-        "admin": "a!",
-        "user": "u!"
+    "commands": {
+        "base": {
+            "prefix": "!",
+            "roles": ["girl", "boy", "bot"]
+        },
+        "admin": {
+            "prefix": "a!",
+            "roles": ["admin", "superadmin"]
+        },
+        "user": {
+            "prefix": "u!",
+            "roles": ["girl", "boy", "bot"]
+        }
     }
 }
