@@ -1,4 +1,4 @@
-const settings = require('../../settings.json');
+const settings = require('../settings.json');
 const Emoji = require("discord-emoji");
 
 exports.run = (client, message, args) => {
@@ -42,4 +42,18 @@ exports.run = (client, message, args) => {
     } else {
         message.channel.send('Pas comme ça qu\'ça s\'écrit !');
     }
-}
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ['p?'],
+  permLevel: 2,
+  nsfw: false
+};
+
+exports.help = {
+  name: 'poll',
+  description: 'Creates a poll',
+  usage: 'poll [<question>] (<choices separated with ;; >)'
+};

@@ -14,4 +14,18 @@ exports.run = (client, message, args) => {
 
   message.mentions.users.forEach(user => { undeafenMember(message.guild.member(user)); });
   message.mentions.roles.forEach(role => { role.members.forEach(member => { undeafenMember(member); }); });
-}
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: true,
+  aliases: ['-d'],
+  permLevel: 5,
+  nsfw: false
+};
+
+exports.help = {
+  name: 'undeafen',
+  description: 'Undeafens a member or a group',
+  usage: 'undeafen <members> <roles>'
+};

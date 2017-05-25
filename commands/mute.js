@@ -14,4 +14,18 @@ exports.run = (client, message, args) => {
 
   message.mentions.users.forEach(user => { muteMember(message.guild.member(user)); });
   message.mentions.roles.forEach(role => { role.members.forEach(member => { muteMember(member); }); });
-}
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: true,
+  aliases: ['+m'],
+  permLevel: 5,
+  nsfw: false
+};
+
+exports.help = {
+  name: 'mute',
+  description: 'Mutes a member or a group',
+  usage: 'mute <members> <roles>'
+};

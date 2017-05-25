@@ -14,4 +14,18 @@ exports.run = (client, message, args) => {
 
   message.mentions.users.forEach(user => { unmuteMember(message.guild.member(user)); });
   message.mentions.roles.forEach(role => { role.members.forEach(member => { unmuteMember(member); }); });
-}
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: true,
+  aliases: ['-m'],
+  permLevel: 5,
+  nsfw: false
+};
+
+exports.help = {
+  name: 'unmute',
+  description: 'Unmutes a member or a group',
+  usage: 'unmute <members> <roles>'
+};

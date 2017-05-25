@@ -12,4 +12,18 @@ exports.run = (client, message, args) => {
   kickMember.kick().then(member => {
     message.reply(`${member.user.username} a dégagé.`).catch(console.error);
   }).catch(console.error)
-}
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: true,
+  aliases: [],
+  permLevel: 5,
+  nsfw: false
+};
+
+exports.help = {
+  name: 'kick',
+  description: 'Kicks a member',
+  usage: 'kick <member>'
+};

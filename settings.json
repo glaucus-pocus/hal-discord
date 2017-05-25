@@ -1,5 +1,7 @@
 {
     "logs": "logs",
+    "ownerid": "235515918879293440",
+    "prefix": "hal ",
     "commands": {
         "base": {
             "prefix": "!",
