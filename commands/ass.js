@@ -3,9 +3,6 @@ const RichEmbed = require('discord.js').RichEmbed;
 const Log = require('../utils/log.js');
 
 exports.run = (client, message, args) => {
-  if (!message.channel.nsfw) {
-    return message.reply('Grossier personnage !').catch(console.error);
-  }
   request('http://api.obutts.ru/butts/0/1/random', (err, resp, body) => {
       if (err) return Log.error(err);
       if (resp.statusCode === 200) {

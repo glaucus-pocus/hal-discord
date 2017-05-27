@@ -1,9 +1,22 @@
 const Discord = require('discord.js');
+const Emoji = require("discord-emoji");
 const client = new Discord.Client();
 const fs = require('fs');
 const settings = require('./settings.json');
 const token = require('./secret.json').token;
 const Log = require('./utils/log.js');
+
+Discord.Message.prototype.markAsDone = function() {
+    this.react(Emoji.symbols.o).catch(Log.error);
+};
+
+Discord.Message.prototype.markAsError = function() {
+    this.react(Emoji.symbols.x).catch(Log.error);
+};
+
+Discord.Message.prototype.markAsQuestion = function() {
+    this.react(Emoji.symbols.question).catch(Log.error);
+};
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();

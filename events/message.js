@@ -70,7 +70,14 @@ exports.run = (client, message) => {
         }
 
         if (cmd) {
-            if (perms < cmd.conf.permLevel) return;
+            if (perms < cmd.conf.permLevel)   {
+                message.markAsError();
+                return message.reply('tu n\'es pas autorisé à faire ça.');
+            }
+            if (cmd.conf.nsfw && !message.channel.nsfw) {
+                message.markAsError();
+                return message.reply('Grossier personnage !').catch(console.error);
+            }
             try {
                 cmd.run(client, message, args);
             } catch (err) {

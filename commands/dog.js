@@ -3,12 +3,12 @@ const RichEmbed = require('discord.js').RichEmbed;
 const Log = require('../utils/log.js');
 
 exports.run = (client, message, args) => {
-  request('http://api.oboobs.ru/boobs/0/1/random', (err, resp, body) => {
+  request('https://random.dog/woof.json', (err, resp, body) => {
       if (err) return Log.error(err);
       if (resp.statusCode === 200) {
         message.channel.send({embed: new RichEmbed()
           .setColor('DARK_RED')
-          .setImage(`http://media.oboobs.ru/${JSON.parse(body)[0].preview}`)
+          .setImage(JSON.parse(body).url)
         }).catch(console.error);
       }
   })
@@ -17,13 +17,13 @@ exports.run = (client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: ['boobies'],
+  aliases: ['bitch', 'woof'],
   permLevel: 2,
-  nsfw: true
+  nsfw: false
 };
 
 exports.help = {
-  name: 'boobs',
-  description: 'Writes some poem.',
-  usage: 'boobs'
+  name: 'dog',
+  description: 'Woof.',
+  usage: 'dog'
 };
