@@ -46,7 +46,7 @@ exports.run = (client, message, args) => {
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: ['p?'],
   permLevel: 2,
   nsfw: false

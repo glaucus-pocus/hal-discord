@@ -60,7 +60,6 @@ exports.run = (client, message) => {
     if (message.content.startsWith(settings.prefix)) {
         const command = message.content.slice(settings.prefix.length).split(' ')[0];
         const args = message.content.slice(settings.prefix.length + command.length + 1);
-        const perms = client.elevation(message);
         let cmd;
 
         if (client.commands.has(command)) {
@@ -70,13 +69,17 @@ exports.run = (client, message) => {
         }
 
         if (cmd) {
-            if (perms < cmd.conf.permLevel)   {
+            if (cmd.conf.guildOnly && !message.guild) {
                 message.markAsError();
-                return message.reply('tu n\'es pas autorisé à faire ça.');
+                return message.reply('you have to be in a guild channel.').catch(console.error);
+            }
+            if (client.elevation(message) < cmd.conf.permLevel) {
+                message.markAsError();
+                return message.reply('you are not allowed to do that.').catch(console.error);
             }
             if (cmd.conf.nsfw && !message.channel.nsfw) {
                 message.markAsError();
-                return message.reply('Grossier personnage !').catch(console.error);
+                return message.reply('you are way too pervert for this channel !').catch(console.error);
             }
             try {
                 cmd.run(client, message, args);
