@@ -1,0 +1,19 @@
+{
+    "logs": "logs",
+    "ownerid": "235515918879293440",
+    "prefix": "hal ",
+    "commands": {
+        "base": {
+            "prefix": "!",
+            "roles": ["girl", "boy", "bot"]
+        },
+        "admin": {
+            "prefix": "a!",
+            "roles": ["admin", "superadmin"]
+        },
+        "user": {
+            "prefix": "u!",
+            "roles": ["girl", "boy", "bot"]
+        }
+    }
+}
