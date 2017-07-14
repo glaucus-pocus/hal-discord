@@ -1,6 +1,5 @@
 //const sql = require('sqlite');
 const Emoji = require('discord-emoji');
-const now = require('performance-now');
 const settings = require('../settings.json');
 
 //sql.open('../db.sqlite');
