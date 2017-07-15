@@ -12,8 +12,8 @@ exports.run = (client, message, args) => {
 		member.setMute(false).catch(console.error);
 	};
 
-	message.mentions.users.forEach(user => { unmuteMember(message.guild.member(user)); });
-	message.mentions.roles.forEach(role => { role.members.forEach(member => { unmuteMember(member); }); });
+	message.mentions.users.forEach(user => unmuteMember(message.guild.member(user)));
+	message.mentions.roles.forEach(role => role.members.forEach(member => unmuteMember(member)));
 };
 
 exports.conf = {

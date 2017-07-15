@@ -4,6 +4,7 @@
   "description": "Bot for Glaucus Pocus Discord",
   "main": "app.js",
   "scripts": {
+    "lint": "npm run test -- --fix",
     "test": "eslint commands finalizers functions inhibitors events extendables"
   },
   "author": "Pandraghon",

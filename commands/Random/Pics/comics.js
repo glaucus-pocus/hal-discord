@@ -2,7 +2,7 @@ exports.run = async (client, message, args) => {
 	const request = require('request-promise-native');
 	const cheerio = require('cheerio');
 	try {
-		const comics = ['amazing super powers', 'cyanide and happiness', 'chainsawsuit', 'commitstrip', 'theodd1sout']
+		const comics = ['amazing super powers', 'cyanide and happiness', 'chainsawsuit', 'commitstrip', 'theodd1sout'];
 		if (!args.length) {
 			args = [comics[Math.floor(Math.random()*comics.length)]];
 		}
