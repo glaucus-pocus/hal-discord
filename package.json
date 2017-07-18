@@ -4,7 +4,8 @@
   "description": "Bot for Glaucus Pocus Discord",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npm run test -- --fix",
+    "test": "eslint commands finalizers functions inhibitors events extendables"
   },
   "author": "Pandraghon",
   "license": "MIT",
@@ -21,6 +22,9 @@
     "sqlite": "^2.8.0",
     "youtube-audio-stream": "0.0.48",
     "ytdl-core": "^0.14.4"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0"
   },
   "engines": {
     "node": ">=8.1.0"

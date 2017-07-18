@@ -12,8 +12,8 @@ exports.run = (client, message, args) => {
 		member.setDeaf(false).catch(console.error);
 	};
 
-	message.mentions.users.forEach(user => { undeafenMember(message.guild.member(user)); });
-	message.mentions.roles.forEach(role => { role.members.forEach(member => { undeafenMember(member); }); });
+	message.mentions.users.forEach(user => undeafenMember(message.guild.member(user)));
+	message.mentions.roles.forEach(role => role.members.forEach(member => undeafenMember(member)));
 };
 
 exports.conf = {
