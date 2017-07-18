@@ -1,6 +1,6 @@
-exports.run = (client, message, args) => {
+exports.run = async (client, message, [dice]) => {
 	const rolls = {};
-	let str = args.replace(/(\d*)d(\d+)/gi, (match, $1, $2) => {
+	let str = dice.replace(/(\d*)d(\d+)/gi, (match, $1, $2) => {
 		$1 = $1 || 1;
 		const val = [];
 		for (let i = 0 ; i < $1 ; ++i) {
