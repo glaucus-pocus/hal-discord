@@ -3,8 +3,8 @@ exports.run = async (client, message, args) => {
 	try {
 		const body = await request.get('http://random.cat/meow').then(JSON.parse);
 		message.channel.send({embed: new client.methods.Embed()
-				.setColor('DARK_RED')
-				.setImage(body.file)
+			.setColor('DARK_RED')
+			.setImage(body.file)
 		});
 	} catch(err) {
 		client.functions.log(err, 'error');

@@ -1,4 +1,4 @@
-const komada = require("komada");
+const komada = require('komada');
 
 const settings = require('./settings.json');
 const token = require('./secret.json').token;

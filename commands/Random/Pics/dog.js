@@ -3,8 +3,8 @@ exports.run = async (client, message, args) => {
 	try {
 		const body = await request.get('https://random.dog/woof.json').then(JSON.parse);
 		message.channel.send({embed: new client.methods.Embed()
-				.setColor('DARK_RED')
-				.setImage(body.url)
+			.setColor('DARK_RED')
+			.setImage(body.url)
 		});
 	} catch(err) {
 		client.functions.log(err, 'error');
