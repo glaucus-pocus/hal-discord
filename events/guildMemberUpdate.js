@@ -2,6 +2,7 @@ const settings = require('../settings.json');
 const ddiff = require('deep-diff').diff;
 
 exports.run = (client, oldMember, newMember) => {
+	if (newMember.guild.id !== settings.home) return;
 	const channel = newMember.guild.channels.find('name', settings.logs);
 	if (!channel) return;
 
