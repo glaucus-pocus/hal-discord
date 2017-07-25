@@ -2,17 +2,17 @@ const fs = require('fs');
 const YoutubeStream = require('ytdl-core');
 const settings = require('../../settings.json');
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, [url]) => {
 	if (message.member.voiceChannel) {
 		message.member.voiceChannel.join()
             .then((connection) => {
 	            console.log(client.voiceConnections);
                 //const stream = fs.createReadStream('../sounds/beep.wav');
 	let dispatcher;
-	if(!args) {
+	if(!url) {
 		dispatcher = connection.playFile('/home/bots/NoobEater/sounds/bisounours.mp3');
 	} else {
-		let stream = YoutubeStream(args[0]);
+		let stream = YoutubeStream(url);
 		stream.on('error', () => {
 			message.reply('cannot find');
 			message.markAsError();
@@ -42,6 +42,6 @@ exports.conf = {
 exports.help = {
 	name: 'play',
 	description: '♫',
-	usage: '<url:url>',
+	usage: '[url:url]',
 	usageDelim: '',
 };
