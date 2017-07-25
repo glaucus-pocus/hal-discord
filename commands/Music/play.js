@@ -22,11 +22,11 @@ exports.run = async (client, message, [url]) => {
 	}
 	dispatcher.setVolume(.5);
 
-	return message.markAsDone();
+	message.markAsDone();
 }).catch(console.error);
 	} else {
 		message.reply('you need to be in a voice channel to use this command.');
-		return message.markAsError();
+		message.markAsError();
 	}
 };
 
