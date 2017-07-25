@@ -21,7 +21,7 @@
     "request-promise-native": "^1.0.4",
     "sqlite": "^2.8.0",
     "youtube-audio-stream": "0.0.50",
-    "ytdl-core": "^0.14.4"
+    "ytdl-core": "^0.15.0"
   },
   "devDependencies": {
     "eslint": "^4.3.0"
