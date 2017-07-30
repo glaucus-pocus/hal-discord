@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "lint": "npm run test -- --fix",
-    "test": "eslint commands finalizers functions inhibitors events extendables"
+    "test": "eslint commands functions inhibitors events extendables app.js"
   },
   "author": "Pandraghon",
   "license": "MIT",
@@ -24,7 +24,9 @@
     "ytdl-core": "^0.14.4"
   },
   "devDependencies": {
-    "eslint": "^3.19.0"
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0"
   },
   "engines": {
     "node": ">=8.1.0"

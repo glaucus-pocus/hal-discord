@@ -6,9 +6,10 @@
     "es6": true,
     "node": true
   },
+  "extends": "airbnb-base",
   "rules": {
     "no-console": "off",
-    "indent": ["error", "tab", { "SwitchCase": 1 }],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": "off",
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"],
@@ -16,6 +17,7 @@
     "no-shadow": "warn",
     "no-plusplus": "off",
     "no-continue": "off",
+    "no-cond-assign": ["error", "except-parens"],
     "radix": ["error", "as-needed"],
     "import/no-extraneous-dependencies": "off",
     "import/no-unresolved": "off",
