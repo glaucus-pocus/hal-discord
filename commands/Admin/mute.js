@@ -1,33 +1,30 @@
-exports.run = (client, message, args) => {
-	if (message.mentions.users.size === 0 && message.mentions.roles.size === 0) {
-		return message.reply('t\'as pas dit qui qu\'tu veux mute').catch(console.error);
-	}
-	if (!message.guild.member(client.user).hasPermission('MUTE_MEMBERS')) {
-		return message.reply('je peux pas.').catch(console.error);
-	}
+exports.run = async (client, message, [memberOrRole]) => {
+  const muteRole = message.guild.roles.find(r => r.name.toLowerCase() === 'muted');
+  if (!muteRole) return message.reply('I cannot find a `Muted` role!');
 
-	const muteMember = (member) => {
-		if (!member || !member.voiceChannel) return;
-		if (member.serverMute) return message.channel.send(`${member} est déjà mute`);
-		member.setMute(true).catch(console.error);
-	};
+  let members = new client.methods.Collection();
 
-	message.mentions.users.forEach(user => muteMember(message.guild.member(user)));
-	message.mentions.roles.forEach(role => role.members.forEach(member => muteMember(member)));
+  if (memberOrRole.constructor.name === 'Role') {
+    members = memberOrRole.members;
+  } else {
+    members.set(memberOrRole.id, memberOrRole);
+  }
+
+  return Promise.all(members.map(m => m.addRole(muteRole)));
 };
 
 exports.conf = {
-	runIn: ['text'],
-	enabled: true,
-	aliases: ['+m'],
-	permLevel: 5,
-	botPerms: [],
-	nsfw: false
+  runIn: ['text'],
+  enabled: true,
+  aliases: ['+m'],
+  permLevel: 5,
+  botPerms: ['MANAGE_ROLES'],
+  nsfw: false,
 };
 
 exports.help = {
-	name: 'mute',
-	description: 'Mutes a member or a group',
-	usage: '<members|roles>',
-	usageDelim: '',
+  name: 'mute',
+  description: 'Mutes a member or a group',
+  usage: '<member:member|role:role>',
+  usageDelim: '',
 };
