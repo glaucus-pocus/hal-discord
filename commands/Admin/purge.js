@@ -1,24 +1,25 @@
-const settings = require('../../settings.json');
-
-exports.run = (client, message, args) => {
-	const messageCount = parseInt(args[0]) || 50;
-	const logs = message.guild.channels.find('name', settings.logs);
-	const channel = message.channel;
-	return channel.fetchMessages({ limit: messageCount }).then(messages => messages.deleteAll());
+exports.run = async (client, msg, [user = client.user, amount]) => {
+  let messages = await msg.channel.fetchMessages({ limit: amount });
+  messages = messages.filter(m => m.author.id === user.id);
+  if (client.config.selfbot) return messages.forEach(m => m.delete().catch((e) => { throw new Error(e); }));
+  return msg.channel.bulkDelete(messages);
 };
 
 exports.conf = {
-	runIn: ['text'],
-	enabled: false,
-	aliases: ['clear'],
-	permLevel: 5,
-	botPerms: [],
-	nsfw: false
+  enabled: true,
+  runIn: ['text', 'dm', 'group'],
+  selfbot: false,
+  aliases: [],
+  permLevel: 0,
+  botPerms: ['MANAGE_MESSAGES'],
+  requiredFuncs: [],
+  requiredModules: [],
 };
 
 exports.help = {
-	name: 'purge',
-	description: 'Purges a channel',
-	usage: '[count]',
-	usageDelim: '',
+  name: 'purge',
+  description: 'This will remove X amount of messages sent in a channel, or by Y user.',
+  usage: '[user:mention] <amount:int{2,100}>',
+  usageDelim: ' ',
+  type: 'commands',
 };
