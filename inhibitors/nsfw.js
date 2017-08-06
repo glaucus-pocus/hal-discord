@@ -1,6 +1,5 @@
 exports.conf = {
   enabled: true,
-  spamProtection: false,
   priority: 5,
 };
 

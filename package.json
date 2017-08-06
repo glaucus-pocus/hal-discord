@@ -20,7 +20,7 @@
     "deep-diff": "^0.3.8",
     "discord-emoji": "^1.1.1",
     "discord.js": "^11.1.0",
-    "komada": "github:dirigeants/komada#indev",
+    "komada": "github:dirigeants/komada#master",
     "moment": "^2.18.1",
     "node-opus": "^0.2.6",
     "path": "^0.12.7",
