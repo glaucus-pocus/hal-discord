@@ -3,11 +3,11 @@ exports.run = async (client, message, [roleOrMember]) => {
   if (roleOrMember.constructor.name === 'Role') {
     members = roleOrMember.members;
   } else {
-		members = new client.methods.Collection();
+    members = new client.methods.Collection();
     members.set(roleOrMember.id, roleOrMember);
-	}
-	
-	return Promise.all(members.map(m => m.user.send(`You were poked by ${message.author}.`)));
+  }
+
+  return Promise.all(members.map(m => m.user.send(`You were poked by ${message.author}.`)));
 };
 
 exports.conf = {
@@ -16,8 +16,8 @@ exports.conf = {
   aliases: [],
   permLevel: 2,
   botPerms: [],
-	nsfw: false,
-	cooldown: 5000,
+  nsfw: false,
+  cooldown: 5000,
 };
 
 exports.help = {

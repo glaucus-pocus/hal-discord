@@ -5,7 +5,7 @@ It won't be a stylish marriage.
 I can't afford a carriage.
 But you'll look sweet,
 upon the seat,
-of a bicycle built for two.`, {tts: true});
+of a bicycle built for two.`, { tts: true });
 };
 
 exports.conf = {
