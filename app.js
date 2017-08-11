@@ -1,14 +1,13 @@
-const komada = require('komada');
+const { Client } = require('komada');
 
-const settings = require('./settings.json');
+const config = require('./config.json');
 const token = require('./secret.json').token;
 
-const client = new komada.Client({
-  ownerID: settings.ownerID,
-  prefix: settings.prefix,
-  clientOptions: {
-    fetchAllMembers: true,
-  },
-});
+class Bot extends Client {
+  constructor(...args) {
+    super(...args);
+  }
+}
 
-client.login(token);
+
+new Bot(config).login(token);
