@@ -1,6 +1,7 @@
 const settings = require('../settings.json');
 
 exports.run = (client, member) => {
+  if (member.guild.id !== settings.home) return;
   member.guild.defaultChannel.send(`${member} nous a rejoint !`).then((message) => {
     message.react('😊');
   });

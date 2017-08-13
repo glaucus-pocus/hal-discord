@@ -20,6 +20,7 @@
     "deep-diff": "^0.3.8",
     "discord-emoji": "^1.1.1",
     "discord.js": "^11.1.0",
+    "github-webhook-handler": "^0.6.0",
     "komada": "github:dirigeants/komada#master",
     "moment": "^2.18.1",
     "node-opus": "^0.2.6",
