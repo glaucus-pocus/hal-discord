@@ -1,45 +1,56 @@
-const YoutubeStream = require('ytdl-core');
+const yt = require('ytdl-core');
 
-exports.run = async (client, message, [url]) => {
-  if (message.member.voiceChannel) {
-    message.member.voiceChannel.join()
-      .then((connection) => {
-        console.log(client.voiceConnections);
-        // const stream = fs.createReadStream('../sounds/beep.wav');
-        let dispatcher;
-        if (!url) {
-          dispatcher = connection.playFile('/home/bots/NoobEater/sounds/bisounours.mp3');
-        } else {
-          const stream = YoutubeStream(url);
-          stream.on('error', () => {
-            message.reply('cannot find');
-            message.markAsError();
-            connection.disconnect();
-          });
-          dispatcher = connection.playStream(stream);
-        }
-        dispatcher.setVolume(0.5);
-
-        message.markAsDone();
-      }).catch(console.error);
-  } else {
-    message.reply('you need to be in a voice channel to use this command.');
-    message.markAsError();
+exports.run = async (client, msg) => {
+  if (client.queue.has(msg.guild.id) === false) {
+    throw `Add some songs to the queue first with ${msg.guild.settings.prefix}add`;
   }
+  if (!msg.guild.voiceConnection) {
+    await client.commands.get('join').run(client, msg);
+    return this.run(client, msg);
+  }
+
+  const handler = client.queue.get(msg.guild.id);
+  if (handler.playing) throw 'Already Playing';
+  handler.playing = true;
+
+  (function play(song) {
+    if (song === undefined) {
+      return msg.channel.send('⏹ Queue is empty').then(() => {
+        handler.playing = false;
+        return msg.member.voiceChannel.leave();
+      });
+    }
+
+    msg.channel.send(`🎧 Playing: **${song.title}** as requested by: **${song.requester}**`)
+      .catch(err => client.emit('log', err, 'error'));
+
+    return msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), { passes: 2 })
+      .on('end', () => {
+        handler.songs.shift();
+        play(handler.songs[0]);
+      })
+      .on('error', err => msg.channel.send(`error: ${err}`).then(() => {
+        handler.songs.shift();
+        play(handler.songs[0]);
+      }));
+  }(handler.songs[0]));
+
+  return null;
 };
 
 exports.conf = {
-  runIn: ['text'],
   enabled: true,
+  runIn: ['text'],
   aliases: [],
-  permLevel: 2,
+  permLevel: 0,
   botPerms: [],
-  nsfw: false,
+  requiredFuncs: [],
 };
 
 exports.help = {
   name: 'play',
-  description: '♫',
-  usage: '[url:url]',
+  description: 'Plays the queue.',
+  usage: '',
   usageDelim: '',
+  extendedHelp: '',
 };
