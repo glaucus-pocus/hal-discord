@@ -1,34 +1,34 @@
-exports.run = (client, message, args) => {
-  if (!args) {
-    if (message.member.voiceChannel) {
-      message.member.voiceChannel.join()
-        .then((connection) => {
-          console.log(client.voiceConnections);
-          const dispatcher = connection.playFile('/home/bots/NoobEater/sounds/bisounours.mp3');
-          dispatcher.setVolume(0.5);
-          console.log(dispatcher.time);
-
-          message.markAsDone();
-        }).catch(console.error);
-    }
-  } else {
-    message.reply('you need to be in a voice channel to use this command.');
-    message.markAsError();
+exports.run = async (client, msg) => {
+  const voiceChannel = msg.member.voiceChannel;
+  if (!voiceChannel) {
+    throw 'You are not conected in a voice channel.';
   }
+
+  const permissions = voiceChannel.permissionsFor(msg.guild.me);
+  if (permissions.has('CONNECT') === false) {
+    throw 'I do not have enough permissions to connect to your voice channel. I am missing the CONNECT permission.';
+  }
+  if (permissions.has('SPEAK') === false) {
+    throw 'I can connect... but not speak. Please turn on this permission so I can emit music.';
+  }
+
+  await voiceChannel.join();
+  return msg.send(`Successfully connected to the voice channel ${voiceChannel}`);
 };
 
 exports.conf = {
-  runIn: ['text'],
   enabled: true,
+  runIn: ['text'],
   aliases: [],
-  permLevel: 2,
+  permLevel: 0,
   botPerms: [],
-  nsfw: false,
+  requiredFuncs: [],
 };
 
 exports.help = {
   name: 'join',
-  description: 'Makes me join you in a voice channel.',
+  description: 'Joins the message author\'s voice channel.',
   usage: '',
   usageDelim: '',
+  extendedHelp: '',
 };
