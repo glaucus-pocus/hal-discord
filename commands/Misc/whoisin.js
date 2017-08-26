@@ -4,7 +4,7 @@ exports.conf = {
   runIn: ['text'],
   enabled: true,
   aliases: [],
-  permLevel: 1,
+  permLevel: 0,
   botPerms: [],
   nsfw: false,
   cooldown: 5,

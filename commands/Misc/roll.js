@@ -22,10 +22,10 @@ exports.run = async (client, message, [dice]) => {
 };
 
 exports.conf = {
-  runIn: ['text'],
+  runIn: ['text', 'dm', 'group'],
   enabled: true,
   aliases: [],
-  permLevel: 2,
+  permLevel: 0,
   botPerms: [],
   nsfw: false,
 };
