@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "lint": "npm run test -- --fix",
-    "test": "eslint commands functions inhibitors events extendables app.js"
+    "test": "eslint commands functions inhibitors events extendables app.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,8 @@
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
     "sqlite": "^2.8.0",
-    "ytdl-core": "^0.17.0"
+    "ytdl-core": "^0.17.0",
+    "snyk": "^1.192.0"
   },
   "devDependencies": {
     "eslint": "^4.3.0",
@@ -38,5 +41,6 @@
   },
   "engines": {
     "node": ">=8.1.0"
-  }
+  },
+  "snyk": true
 }
